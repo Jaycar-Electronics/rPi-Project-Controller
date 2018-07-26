@@ -1,0 +1,147 @@
+
+
+<head>
+
+	<!-- for KICKSTART html css  ( makes things look nicer) --> 	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/static/kickstart/js/kickstart.js"></script> <!-- KICKSTART -->
+	<link rel="stylesheet" href="/static/kickstart/css/kickstart.css" media="all" /> <!-- KICKSTART -->
+
+	<!-- Our FLASK interface code -->
+	<script src='/static/interface.js'></script>
+
+<style>
+h1.supersize{
+	font-size: 700%;
+}
+
+.fa-heart{
+	color: green;
+}
+
+.fa-thumbs-down{
+	color: blue;
+}
+.fa-warning{
+	color: red;
+}
+</style>
+</head>
+<body>
+
+	<h1 class='center'> Feed the cat </h1>
+	<h1 class='supersize center'><i id='cat' class='fa fa-github-alt'></i></h1>
+	<h2 class='center'>
+		<i id='happy' class='fa fa-heart'></i>
+		<i id='sad' class='fa fa-thumbs-down'></i>
+		<i id='angry' class='fa fa-warning '></i>
+		<!-- crazy will add 'fa-spin' to the cat --> 
+	
+	</h2>
+
+	<div class='grid flex' style='width:50%;'>
+		<div class='col_6 right'>
+			<button class='large blue' id='blu' onclick='neuronbutton(this);'> 
+				<i class="fa fa-bug"></i> Bugs
+			</button>
+		</div>
+		<div class='col_6'>
+			<button class='large red' id='red' onclick='neuronbutton(this);'>
+				<i class="fa fa-coffee"></i>  Coffee
+			</button>
+		
+		</div>
+		<div class='col_6 right'>
+			<button class='large orange center' id='yel' onclick='neuronbutton(this);'>
+				<i class="fa fa-birthday-cake"></i> Cake
+			</button>
+		</div>
+		<div class='col_6'>
+			<button class='large green' id='grn' onclick='neuronbutton(this);'>
+				<i class="fa fa-leaf"></i> Leaves 
+			</button>
+		</div>
+		<p id='msg' class='col_12 center'>no response</p>
+	</div>
+
+
+</body>
+
+<script>
+const  grn_pin = 12;
+const  yel_pin = 16;
+const  red_pin = 20;
+const  blu_pin = 21;
+
+var msg_elem = document.getElementById('msg');
+
+var angry_icon = document.getElementById('angry');
+var happy_icon = document.getElementById('happy');
+var sad_icon = document.getElementById('sad');
+var cat_icon = document.getElementById('cat');
+
+function happy(){
+	happy_icon.style.display = 'block';
+	angry_icon.style.display = 'none';
+	sad_icon.style.display = 'none';
+	cat_icon.classList.remove('fa-spin');
+}
+function angry(){
+	happy_icon.style.display = 'none';
+	angry_icon.style.display = 'block';
+	sad_icon.style.display = 'none';
+	cat_icon.classList.remove('fa-spin');
+}
+function sad(){
+	happy_icon.style.display = 'none';
+	angry_icon.style.display = 'none';
+	sad_icon.style.display = 'block';
+	cat_icon.classList.remove('fa-spin');
+}
+function crazy(){
+	happy_icon.style.display = 'none';
+	angry_icon.style.display = 'none';
+	sad_icon.style.display = 'none';
+	cat_icon.classList.add('fa-spin');
+}
+function neuronbutton(e){
+	var b = e.id; //get the id of the button
+
+	var data = {}
+	data[grn_pin] = b == 'grn', //boolean values if id is 'grn' etc
+	data[yel_pin] = b == 'yel',
+	data[red_pin] = b == 'red',
+	data[blu_pin] = b == 'blu'
+	console.log('sending data to server:');
+	console.log(data);
+	console.log('getting response');
+
+	send_multi(data).then(function(data){
+		console.log(data);
+		switch(data.mood){
+			case 'happy':
+				happy();
+				break;
+			case 'sad':
+				sad();
+				break;
+			case 'angry':
+				angry();
+				break;
+			case 'crazy':
+				crazy();
+				break;
+		}
+
+		msg_elem.innerHTML = data.text;
+	});
+};
+
+//clear all for initial display
+happy_icon.style.display = 'none';
+angry_icon.style.display = 'none';
+sad_icon.style.display = 'none';
+cat_icon.classList.remove('fa-spin');
+
+</script>
+
