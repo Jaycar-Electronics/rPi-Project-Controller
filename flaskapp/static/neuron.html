@@ -10,7 +10,7 @@
 	<!-- Our FLASK interface code -->
 	<script src='/static/interface.js'></script>
 
-<style>
+	<style>
 h1.supersize{
 	font-size: 700%;
 }
@@ -25,43 +25,47 @@ h1.supersize{
 .fa-warning{
 	color: red;
 }
-</style>
+	</style>
 </head>
 <body>
 
-	<h1 class='center'> Feed the cat </h1>
+	<h1 class='center'> Feed the cat</h1>
 	<h1 class='supersize center'><i id='cat' class='fa fa-github-alt'></i></h1>
 	<h2 class='center'>
 		<i id='happy' class='fa fa-heart'></i>
 		<i id='sad' class='fa fa-thumbs-down'></i>
 		<i id='angry' class='fa fa-warning '></i>
 		<!-- crazy will add 'fa-spin' to the cat --> 
-	
+
 	</h2>
 
-	<div class='grid flex' style='width:50%;'>
-		<div class='col_6 right'>
-			<button class='large blue' id='blu' onclick='neuronbutton(this);'> 
-				<i class="fa fa-bug"></i> Bugs
-			</button>
+	<div class='grid-flex'>
+
+		<div class='row'>
+			<div class='col_6 right'>
+				<button class='large blue' id='blu' onclick='neuronbutton(this);'> 
+					<i class="fa fa-bug"></i> Bugs
+				</button>
+			</div>
+			<div class='col_6'>
+				<button class='large red' id='red' onclick='neuronbutton(this);'>
+					<i class="fa fa-coffee"></i>  Coffee
+				</button>
+
+			</div>
+		</div><div class='row'>
+			<div class='col_6 right'>
+				<button class='large orange center' id='yel' onclick='neuronbutton(this);'>
+					<i class="fa fa-birthday-cake"></i> Cake
+				</button>
+			</div>
+			<div class='col_6'>
+				<button class='large green' id='grn' onclick='neuronbutton(this);'>
+					<i class="fa fa-leaf"></i> Leaves 
+				</button>
+			</div>
 		</div>
-		<div class='col_6'>
-			<button class='large red' id='red' onclick='neuronbutton(this);'>
-				<i class="fa fa-coffee"></i>  Coffee
-			</button>
-		
-		</div>
-		<div class='col_6 right'>
-			<button class='large orange center' id='yel' onclick='neuronbutton(this);'>
-				<i class="fa fa-birthday-cake"></i> Cake
-			</button>
-		</div>
-		<div class='col_6'>
-			<button class='large green' id='grn' onclick='neuronbutton(this);'>
-				<i class="fa fa-leaf"></i> Leaves 
-			</button>
-		</div>
-		<p id='msg' class='col_12 center'>no response</p>
+		<p id='msg' class='col_12 center'></p>
 	</div>
 
 
@@ -112,7 +116,7 @@ function neuronbutton(e){
 	data[yel_pin] = b == 'yel',
 	data[red_pin] = b == 'red',
 	data[blu_pin] = b == 'blu'
-	console.log('sending data to server:');
+		console.log('sending data to server:');
 	console.log(data);
 	console.log('getting response');
 

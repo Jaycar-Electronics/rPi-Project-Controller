@@ -7,6 +7,10 @@ red_pin = 12
 yel_pin = 16
 grn_pin = 20
 blu_pin = 21
+GPIO.setup(red_pin,GPIO.OUT)
+GPIO.setup(yel_pin,GPIO.OUT)
+GPIO.setup(grn_pin,GPIO.OUT)
+GPIO.setup(blu_pin,GPIO.OUT)
 
 GPIO.setup(red_pin,GPIO.IN)
 GPIO.setup(yel_pin,GPIO.IN)
