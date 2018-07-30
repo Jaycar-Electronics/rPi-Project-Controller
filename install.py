@@ -99,7 +99,7 @@ if screen == 'p' or screen == 'l':
     sudo cp -rf ./usr/99-calibration.conf-5 /etc/X11/xorg.conf.d/99-calibration.conf 
     sudo dpkg -i -B xserver-xorg-input-evdev_2.10.5-1_armhf.deb
     sudo cp -rf /usr/share/X11/xorg.conf.d/10-evdev.conf /usr/share/X11/xorg.conf.d/45-evdev.conf
-    """.split():
+    """.split('\n'):
         os.system(line)
     
     if screen == 'p':
