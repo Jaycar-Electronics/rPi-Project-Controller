@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import os,pip
+import os,pip,importlib
 
 
 def clr():
@@ -7,6 +7,7 @@ def clr():
 
 def install(package):
     pip.main(['install', package])
+    globals()[package] = importlib.import_module(package)
 
 clr()
 print("""
@@ -53,11 +54,11 @@ Installing dependencies..
 install('flask')
 install('gitpython')
 
-from git import Repo
+from git import Repo, exc
 try:
     Repo.clone_from('http://github.com/duinotech/rPi-Project-Controller',
         '/home/pi/rPi-Project-Controller')
-except GitCommandError as e:
+except exc.GitCommandError as e:
     pass
 
 os.chdir('/home/pi/rPi-Project-Controller')
@@ -87,7 +88,7 @@ while screen not in ['p','l','n']:
 if screen == 'p' or screen == 'l':
     try:
         Repo.clone_from('http://github.com/goodtft/LCD-show','/home/pi/LCD-show')
-    except GitCommandError as e:
+    except exc.GitCommandError as e:
         #assumed already have it
         print('failed to get LCD-show from goodtft but I\'ll assume you already have it')
         pass
@@ -107,8 +108,8 @@ if screen == 'p' or screen == 'l':
     
     if screen == 'p':
         os.system('echo "display_rotate 1" >> /boot/config.txt')
-        os.system('sed -i "4s/.*/Option \"Calibration\" \"208 3905 3910 288\"/" /etc/X11/xorg.conf.d/99-calibration.conf')
-        os.system('sed -i "5s/.*/Option \"SwapAxes\" \"1\"/" /etc/X11/xorg.conf.d/99-calibration.conf')
+        os.system('sed -i "4s/.*/Option \"Calibration\" \"208 3905 3910 288\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
+        os.system('sed -i "5s/.*/Option \"SwapAxes\" \"1\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
 
 
 
