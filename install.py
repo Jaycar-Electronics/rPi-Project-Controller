@@ -31,7 +31,7 @@ print('''
 this script will make changes to your
 device, and presumes that this is a fresh install
 
-If something goes wrong, you might have to re-image
+If something goes wrong, you _might_ have to re-image
 your SD card.
 
 ''')
@@ -76,17 +76,20 @@ print('''
 
     and if so, are you going to use it in (P)ortriat or (L)andscape mode?
     
-    (n for 'no screen', either webserver or self-provided screen mode)
+    ( use n for 'no screen', either webserver or self-provided screen mode)
 ''')
 screen = None
 while screen not in ['p','l','n']:
-    screen = input('screen? [P/l/n]').lower()
+    print('please use from the options p, l or n,')
+    screen = input('screen? [P/l/n]') or 'p'
+    screen = screen.lower()
 
 if screen == 'p' or screen == 'l':
     try:
         Repo.clone_from('http://github.com/goodtft/LCD-show','/home/pi/LCD-show')
     except GitCommandError as e:
         #assumed already have it
+        print('failed to get LCD-show from goodtft but I\'ll assume you already have it')
         pass
 
     os.chdir('/home/pi/LCD-show')
@@ -108,3 +111,13 @@ if screen == 'p' or screen == 'l':
         os.system('sed -i "5s/.*/Option \"SwapAxes\" \"1\"/" /etc/X11/xorg.conf.d/99-calibration.conf')
 
 
+
+clr()
+print('-='*15)
+print('          All Done!      ')
+print('-='*15)
+print('the system will now reboot')
+for i in range(5):
+    print('{}.. '.format(i),end='',flush=True)
+
+print('REBOOT')
