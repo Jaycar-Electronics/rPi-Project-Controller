@@ -93,7 +93,13 @@ if screen == 'p' or screen == 'l':
         print('failed to get LCD-show from goodtft but I\'ll assume you already have it')
         pass
 
-    os.chdir('/home/pi/LCD-show')
+    try:
+        os.chdir('/home/pi/LCD-show')
+    except Exception as e:
+        print('you don\'t have it, this is bad')
+        print('cancelling build, check out this script and install manually')
+        print(e)
+        exit()
     for line in """
     sudo rm -rf /etc/X11/xorg.conf.d/40-libinput.conf
     sudo cp -rf ./boot/config-5.txt /boot/config.txt
@@ -107,9 +113,9 @@ if screen == 'p' or screen == 'l':
         os.system(line)
     
     if screen == 'p':
-        os.system('echo "display_rotate 1" >> /boot/config.txt')
-        os.system('sed -i "4s/.*/Option \"Calibration\" \"208 3905 3910 288\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
-        os.system('sed -i "5s/.*/Option \"SwapAxes\" \"1\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
+        os.system('sudo echo "display_rotate 1" >> /boot/config.txt')
+        os.system('sudo sed -i "4s/.*/Option \"Calibration\" \"208 3905 3910 288\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
+        os.system('sudo sed -i "5s/.*/Option \"SwapAxes\" \"1\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
 
 
 
