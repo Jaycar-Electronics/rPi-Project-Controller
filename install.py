@@ -56,8 +56,7 @@ Installing dependencies..
 install('flask')
 install('gitpython','git') 
 try:
-
-from git import Repo, exc
+    from git import Repo, exc
 except ImportError as e:
     print('installed the dependencies but failed to import.')
     print('please run this script again')
