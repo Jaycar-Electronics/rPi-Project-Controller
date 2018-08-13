@@ -1,14 +1,13 @@
 #!/usr/bin/python3
-import os,pip,importlib
-
+import os,pip,importlib,site
 
 def clr():
-    pass
-    #os.system('clear')
+    os.system('clear')
 
 def install(package, imp = None, no_import = False):
     pip.main(['install', package])
     if not no_import:
+        importlib.reload(site)
         globals()[imp or package] = importlib.import_module(imp or package)
 
 clr()
@@ -54,8 +53,8 @@ Installing dependencies..
 """)
 
 install('flask')
-install('gitpython','git') 
 try:
+    install('gitpython','git') 
     from git import Repo, exc
 except ImportError as e:
     print('installed the dependencies but failed to import.')
@@ -135,3 +134,4 @@ for i in range(5):
     print('{}.. '.format(i),end='',flush=True)
 
 print('REBOOT')
+os.system('reboot')
