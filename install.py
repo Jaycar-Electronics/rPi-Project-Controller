@@ -3,11 +3,13 @@ import os,pip,importlib
 
 
 def clr():
-    os.system('clear')
+    pass
+    #os.system('clear')
 
-def install(package):
+def install(package, imp = None, no_import = False):
     pip.main(['install', package])
-    globals()[package] = importlib.import_module(package)
+    if not no_import:
+        globals()[imp or package] = importlib.import_module(imp or package)
 
 clr()
 print("""
@@ -52,7 +54,7 @@ Installing dependencies..
 """)
 
 install('flask')
-install('gitpython')
+install('gitpython','git') 
 
 from git import Repo, exc
 try:
@@ -62,7 +64,7 @@ except exc.GitCommandError as e:
     pass
 
 os.chdir('/home/pi/rPi-Project-Controller')
-install('-e .')
+install('-e .', no_import = True)
 
 clr()
 print('setting up webserver to autoboot..')
@@ -113,9 +115,9 @@ if screen == 'p' or screen == 'l':
         os.system(line)
     
     if screen == 'p':
-        os.system('sudo echo "display_rotate 1" >> /boot/config.txt')
-        os.system('sudo sed -i "4s/.*/Option \"Calibration\" \"208 3905 3910 288\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
-        os.system('sudo sed -i "5s/.*/Option \"SwapAxes\" \"1\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
+        os.system('sudo su -c "echo \"display_rotate=1\" >> /boot/config.txt"')
+        os.system('sudo sed -i "4s/.*/Option \\"Calibration\\" \\"208 3905 3910 288\\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
+        os.system('sudo sed -i "5s/.*/Option \\"SwapAxes\\" \\"1\\" /" /etc/X11/xorg.conf.d/99-calibration.conf')
 
 
 
