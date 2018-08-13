@@ -55,8 +55,14 @@ Installing dependencies..
 
 install('flask')
 install('gitpython','git') 
+try:
 
 from git import Repo, exc
+except ImportError as e:
+    print('installed the dependencies but failed to import.')
+    print('please run this script again')
+    exit()
+
 try:
     Repo.clone_from('http://github.com/duinotech/rPi-Project-Controller',
         '/home/pi/rPi-Project-Controller')
@@ -64,7 +70,7 @@ except exc.GitCommandError as e:
     pass
 
 os.chdir('/home/pi/rPi-Project-Controller')
-install('-e .', no_import = True)
+os.system('pip3 install -e .')
 
 clr()
 print('setting up webserver to autoboot..')
@@ -79,7 +85,7 @@ print('''
 
     and if so, are you going to use it in (P)ortriat or (L)andscape mode?
     
-    ( use n for 'no screen', either webserver or self-provided screen mode)
+    ( use n for 'no screen': either webserver or self-provided screen mode)
 ''')
 screen = None
 while screen not in ['p','l','n']:
