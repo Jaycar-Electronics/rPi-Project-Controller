@@ -11,7 +11,7 @@ from flaskapp import app
 
 @app.route('/pin/multi', methods=['POST']) # neuron only works one way so we won't worry about GET
 def multi():
-    data = request.get_json(force=True);
+    data = request.get_json(force=True)
     print(data)
 
     #set a simple mood case, ideally you'd get a response from the system
@@ -22,7 +22,7 @@ def multi():
 
 
 
-    pin = [x for x in data.keys() if data[x]][0] #get the true value
+    pin = [x for x in data.keys() if data[x]][0] #get the single true value
 
     if pin == '12':
         mood = 'angry'
