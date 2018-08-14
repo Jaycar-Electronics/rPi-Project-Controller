@@ -4,9 +4,17 @@ _Science and Learning_ Project 25
 
 This is a extensible and hackable project controller that could form the basis of your project controlling needs. This repository contains an install script that automatically installs the dependencies for you, as well as sets up a `flask` app to run at log in.
 
-With a mixture of _Javascript_ and _Python_, allow complete control of your `GPIO` pins through a web interface. This is meant to be more of an educational practice point, rather than a complete project in and of itself.
+To install this project on your RaspberryPi, use the following commands:
 
-We've also provided an automatic touch screen set up in case you want to make a touch screen interface. This was originally going to be done using a python module called `appJar` which makes it easy to create software GUI applications. However when we had the web interface, we found it was easier and more consistent to use the chromium browser in `--kiosk` mode to render the web interface on the touch screen.
+```bash
+git clone http://github.com/duinotech/rPi-Project-controller
+./rPi-Project-Controller/install.py
+```
+
+### More Details
+With a mixture of _Javascript_ and _Python_, this project will allow complete control of your `GPIO` pins through a web interface. This is meant to be more of an educational practice point, rather than a complete project in and of itself.
+
+We've also provided an automatic touch screen set up in case you want to make a touch screen interface. This was originally going to be done using a python module called `appJar` which makes it easy to create software GUI applications. However when we had the web interface, we found it was easier and more consistent to use the chromium browser in `--kiosk` mode to render the web interface on the touch screen. -- Why re-invent the wheel multiple times and have inconsistent results?
 
 This is a simple project that is meant to be the bare bones for your project controlling needs. Definitely hackable, and comments have been provided in the code to help you form your own creations.
 
@@ -29,6 +37,7 @@ Note with the open-endedness of this project, you can easily substitute what you
 If you are using the touch screen interface, be sure to connect the jumper wires before you attach the touch screen to the GPIO.
 
 Boot up the rPi into a fresh raspbian install and type the following commands into a new terminal window:
+
 ```bash
 git clone http://github.com/duinotech/rPi-Project-controller
 ./rPi-Project-Controller/install.py
@@ -63,10 +72,13 @@ If you want to use the default "Feed the cat" program, you can just leave the pr
   * This makes it easy to separate the rPi/Python application and the website, as we could easily create more apps, such as a phone application, that uses the same method to communicate to the flask app.
 
 
-#### RestAPI Example
-An example of a REST Api:
+* `JSON` ties in closely with REST, and stands for "JavaScript Object Notation" - it can bundle data together (much like a python dictionary, if you are familiar with Python) and is easy to convert between JSON and string objects. In the example below, the data sent back is a Javascript object: `{'real name': 'John Doe'}`, Note that Javascript objects are surrounded by `{}` characters, much like Python dictionaries.
 
-some service, such as a phone or web app, sends a HTTP request to `somewebsite`:
+
+#### RestAPI Example
+An example of a REST API:
+
+Some service, such as a phone or web app, sends a HTTP request to `somewebsite`:
 ```javascript
 GET api.somewebsite.com/users/436345645
 ```
@@ -82,9 +94,9 @@ BODY: { 'real name': 'John Doe'}
 ```
 the web service (`api.somewebsite.com`) is responsible for managing data sent to and from the API.
 
-* `JSON` ties in closely with REST, and stands for "JavaScript Object Notation" - it can bundle data together (much like a python dictionary, if you are familiar with Python) and is easy to convert between JSON and string objects. In the example above, the data sent back is a Javascript object: `{'real name': 'John Doe'}`, Note that Javascript objects are surrounded by `{}` characters, much like Python dictionaries.
-
 In our example program "somewebsite" is our flask app, and we have a seperate HTML website that provides a Javascript web-application. (although, somewhat confusingly, it is also hosted by our flaskapp).
+
+You should be able to copy the website from the `flaskapp/static` folder onto another machine, and change it so it references the IP of your raspberry Pi, and find that it will still work on your local machine.
 
 
 ## About this 'Feed the Cat' Example Program
